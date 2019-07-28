@@ -7,12 +7,20 @@ class Clause:
         self.size = len(self.variable_list)
         self.id = utils.create_id()
 
+        self.literals_set = set()
+        for var in variable_list:
+            self.literals_set.add(var.variable_value)
+
+    def is_literal_value_present(self, literal_value: int):
+        return literal_value in self.literals_set
+
     def get_literals(self):
         return self.variable_list
 
     def get_literals_sub_sets(self):
         """
         Get all literals sub sets excluding the empty set
+        this is done in O(n2^n), where n is the number of literals in the clause
         :return: all sub sets
         """
         def rec(i, curr, literals, ans):
