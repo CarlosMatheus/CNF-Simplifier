@@ -51,3 +51,27 @@ class Simplifier:
                             c_ala.add_literal(lit)
 
         return c_ala
+
+    def is_tautology(self, clause):
+        """
+        Checks whether a clause is a tautology
+        todo: maybe it can be inside clause class
+        :param clause:
+        :return:
+        """
+        for var in clause.get_literals():
+            if clause.is_literal_value_present(-var.variable_value):
+                return True
+        return False
+
+    def is_blocked_clause(self, clause):
+        """
+        # todo: really understand if you can just remove the clause.
+
+        :return:
+        """
+        pass
+
+    def is_subsumed_clause(self, clause):
+        pass
+
