@@ -1,7 +1,13 @@
 class Variable:
     def __init__(self, variable_string):
-        self.variable_int = int(variable_string)
+        self.original_string = variable_string
+        self.variable_abs = int(variable_string)
+        self.variable_value = int(variable_string)
         self.signal = 1
-        if self.variable_int < 0:
+
+        if self.variable_abs < 0:
             self.signal = -1
-            self.variable_int = abs(self.variable_int)
+            self.variable_abs = abs(self.variable_abs)
+
+    def copy(self):
+        return Variable(self.original_string)
