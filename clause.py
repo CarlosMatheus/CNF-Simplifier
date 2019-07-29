@@ -11,6 +11,16 @@ class Clause:
         for var in variable_list:
             self.literals_set.add(var.variable_value)
 
+    def copy_with_new_id(self):
+        """
+        Copy this clause to a new one with new id and new literals
+        :complexity: O(n) where n in the number of literals inside the clause
+        :return: Clause
+        """
+        new_variable_list = [lit.copy() for lit in self.variable_list] # todo: make copy function
+        new_clause = Clause(new_variable_list)
+        return new_clause
+
     def is_literal_value_present(self, literal_value: int):
         return literal_value in self.literals_set
 
