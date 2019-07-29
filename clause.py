@@ -12,6 +12,17 @@ class Clause:
         for var in variable_list:
             self.literals_set.add(var.variable_value)
 
+    def add_literal(self, lit):
+        """
+        Add a new literal to the clause
+        :complexity: O(1)
+        :param lit: the literal object of the Variable class
+        :return: None
+        """
+        self.variable_list.append(lit)
+        self.size = len(self.variable_list)
+        self.literals_set.add(lit.variable_value)
+
     def copy_with_new_id(self):
         """
         Copy this clause to a new one with new id and new literals
