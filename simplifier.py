@@ -64,13 +64,26 @@ class Simplifier:
                 return True
         return False
 
-    def is_blocked_clause(self, clause):
+    def is_blocked_clause(self, clause, cnf):
         """
         # todo: really understand if you can just remove the clause.
-
-        :return:
+        Checks whether a CNF's clause is a bocked clause or not
+        :complexity: todo
+        :param clause: the clause that will be analised
+        :param cnf: the cnf that the clause belogs
+        :return: boolean
         """
-        pass
+        if clause.is_tautology():
+            return True
+
+        for lit in clause.get_literals():
+            for other_clause in cnf.get_clauses():
+                if other_clause != clause:
+                    if other_clause.has_literal(-lit.variable_value):
+                        resolvent = Clause.get_resolvent(clause, other_clause) # todo: create
+                        if resolvent.is_tautology(): # todo create
+                            return True
+        return False
 
     def is_subsumed_clause(self, clause, cnf):
         """
@@ -78,7 +91,7 @@ class Simplifier:
         todo: this might belong to the clause class
         :param clause: the evaluated clause
         :param cnf: The cnf that the clause belong
-        :return:
+        :return: boolean
         """
         for other_clause in cnf.get_clauses():
             if other_clause.is_different(clause):
