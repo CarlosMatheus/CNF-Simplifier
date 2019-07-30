@@ -69,3 +69,49 @@ class Cnf:
                 new_cnf.add_clause(clause)
 
         return new_cnf
+
+    def blocked_clause_elimination(self):
+        """
+        Simplify CNF by removing all clauses that are blocked
+        :complexity: O( (c*l)^2 )
+        :return: a new CNF without blocked clauses
+        """
+
+        new_cnf = Cnf([])
+        for clause in self.clause_list:
+            if not clause.is_blocked():
+                copied_clause = clause.copy_with_new_id()
+                new_cnf.add_clause(copied_clause)
+
+        return new_cnf
+
+    def hidden_blocked_clause_elimination(self):
+        """
+        Simplify CNF by removing all clauses that are hidden blocked
+
+        :complexity: O( (c*l)^2 )
+        :return: a new CNF without hidden blocked clauses
+        """
+        new_cnf = Cnf([])
+        for clause in self.clause_list:
+            hla_clause = clause.hla(self)
+            if not hla_clause.is_blocked():
+                new_cnf.add_clause(clause)
+
+        return new_cnf
+
+    def asymmetric_blocked_clause_elimination(self):
+        """
+        Simplify CNF by removing all clauses that are asymmetric blocked
+
+        :complexity: O( c^2 * l^2 * 2^l )
+        :return: a new CNF without asymmetric blocked clauses
+        """
+        new_cnf = Cnf([])
+        for clause in self.clause_list:
+            ala_clause = clause.ala(self)
+            if not ala_clause.is_blocked():
+                new_cnf.add_clause(clause)
+
+        return new_cnf
+
