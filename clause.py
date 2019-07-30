@@ -4,6 +4,10 @@ from variable import Variable
 
 class Clause:
     def __init__(self, variable_list: list):
+        """
+        :complexity: O(n) where n is the number of variables in the clause
+        :param variable_list: list of variable
+        """
         if isinstance(variable_list, set):
             variable_list = [Variable(var) for var in variable_list]
 
@@ -15,6 +19,19 @@ class Clause:
         for var in variable_list:
             self.literals_set.add(var.variable_value)
 
+        self.__tautology = self.__update_tautology()
+
+    def __update_tautology(self):
+        """
+        Check if the clause is a tautology
+        :complexity: O(n), where n is the number of literals on clause
+        :return: boolean
+        """
+        for var in self.variable_list:
+            if -var.variable_value in self.literals_set:
+                return True
+        return False
+
     def add_literal(self, lit: Variable):
         """
         Add a new literal to the clause
@@ -25,6 +42,7 @@ class Clause:
         self.variable_list.append(lit)
         self.size = len(self.variable_list)
         self.literals_set.add(lit.variable_value)
+        self.__tautology = self.__update_tautology()
 
     def get_diff(self, other_clause):
         """
@@ -70,6 +88,14 @@ class Clause:
         new_clause = Clause(new_variable_list)
         return new_clause
 
+    def is_tautology(self):
+        """
+        checks whether the clause is a tautology
+        :complexity: O(1)
+        :return: boolean
+        """
+        return self.__tautology
+
     def is_sub_clause_of(self, other_clause):
         """
         checks wheater a clause is a subclause of the other one
@@ -93,7 +119,7 @@ class Clause:
 
     def is_literal_value_present(self, literal_value: int):
         """
-        checkes whether a literal value int is present on literal set
+        checks whether a literal value int is present on literal set
         :complexity: O(1) -> set check uses a hashtable, worse case could be O(n)
         :param literal_value: literal value to check
         :return: boolean
@@ -101,6 +127,10 @@ class Clause:
         return literal_value in self.literals_set
 
     def get_literals(self):
+        """
+        :complexity: O(1)
+        :return: the variable list
+        """
         return self.variable_list
 
     def get_literals_sub_sets(self):
