@@ -35,6 +35,15 @@ class Clause:
                 return True
         return False
 
+    def get_clause_string(self):
+        """
+        get a string with all literals
+        :return: string with all literals separated by spaces
+        """
+        lt = [var.original_string for var in self.variable_list]
+
+        return ' '.join(lt)
+
     def add_literal(self, lit: Variable):
         """
         Add a new literal to the clause

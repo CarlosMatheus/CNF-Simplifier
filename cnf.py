@@ -25,6 +25,13 @@ class Cnf:
 
         self.clause_list.append(clause)
 
+    def get_cnf_string(self):
+        """
+        :return: cnf string
+        """
+        clauses_string_list = [clause.get_clause_string() for clause in self.clause_list]
+        return '\n'.join(clauses_string_list)
+
     def tautology_elimination(self):
         """
         Simplify CNF by removing all clauses that are tautology
