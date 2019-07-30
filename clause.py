@@ -12,7 +12,7 @@ class Clause:
         for var in variable_list:
             self.literals_set.add(var.variable_value)
 
-    def add_literal(self, lit):
+    def add_literal(self, lit: Variable):
         """
         Add a new literal to the clause
         :complexity: O(1)
@@ -22,6 +22,14 @@ class Clause:
         self.variable_list.append(lit)
         self.size = len(self.variable_list)
         self.literals_set.add(lit.variable_value)
+
+    def get_diff(self, other_clause):
+        """
+        Get the difference between two literal sets, this literal set and the other literal set
+        :param other_clause: the other clause
+        :return: a list of Variables that is the difference between the two literals set.
+        """
+        return [Variable(var) for var in self.literals_set.difference(other_clause.literals_set)]
 
     def copy_with_new_id(self):
         """

@@ -1,5 +1,8 @@
 class Variable:
-    def __init__(self, variable_string):
+    def __init__(self, variable_string: str):
+        if type(variable_string) == type(int):
+            variable_string = int(variable_string)
+
         self.original_string = variable_string
         self.variable_abs = int(variable_string)
         self.variable_value = int(variable_string)
