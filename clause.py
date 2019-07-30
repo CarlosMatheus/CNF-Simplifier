@@ -154,6 +154,27 @@ class Clause:
 
         return sub_sets
 
+    def is_blocked(self, cnf):
+        """
+        # todo: really understand if you can just remove the clause.
+        Checks whether a CNF's clause is a bocked clause or not
+        :complexity: O(c*l^2), where c is the number of clauses in cnf, and l is the number of literals per clause
+        :param clause: the clause that will be analised
+        :param cnf: the cnf that the clause belogs
+        :return: boolean
+        """
+        if self.is_tautology():
+            return True
+
+        for lit in self.get_literals():
+            for other_clause in cnf.get_clauses():
+                if other_clause != self:
+                    if other_clause.has_literal(-lit.variable_value):
+                        resolvent_clause = self.get_resolvent(other_clause, lit)
+                        if resolvent_clause.is_tautology():
+                            return True
+        return False
+
     def __eq__(self, other):
         return self.id == other.id
 
