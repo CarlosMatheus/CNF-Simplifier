@@ -27,6 +27,9 @@ class Clause:
         :complexity: O(n), where n is the number of literals on clause
         :return: boolean
         """
+
+        # todo: adjust this for the case it is just adding one
+
         for var in self.variable_list:
             if -var.variable_value in self.literals_set:
                 return True
@@ -190,7 +193,7 @@ class Clause:
                     return True
         return False
 
-    def hla(self, f):
+    def hla(self, f: "Cnf") -> "Clause":
         """
         # todo: test
         # todo: check if the clause must really have size 2
@@ -204,20 +207,20 @@ class Clause:
 
         c_hla = c.copy_with_new_id()
 
-        for lit in c.get_literals():  # l
-            for clause in f.get_clauses():  # c
+        for lit in c.get_literals():
+            for clause in f.get_clauses():
                 if clause != c and clause.size == 2:
                     lit_clause = Clause([lit])
-                    if lit_clause.is_sub_clause_of(clause):  # 1
+                    if lit_clause.is_sub_clause_of(clause):
 
-                        dif = clause.get_diff(lit_clause)  # 1
+                        dif = clause.get_diff(lit_clause)
                         lit = dif[0].copy()
 
-                        c_hla.add_literal(lit)  # l
+                        c_hla.add_literal(lit)
 
         return c_hla
 
-    def ala(self, f):
+    def ala(self, f: "Cnf") -> "Clause":
         """
         # todo: test
         Asymmetric Literal Addition ALA(F,C)
