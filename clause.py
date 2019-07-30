@@ -35,7 +35,7 @@ class Clause:
     def add_literal(self, lit: Variable):
         """
         Add a new literal to the clause
-        :complexity: O(1)
+        :complexity: O(n)
         :param lit: the literal object of the Variable class
         :return: None
         """
@@ -189,6 +189,61 @@ class Clause:
                 if other_clause.is_sub_clause_of(self):
                     return True
         return False
+
+    def hla(self, f):
+        """
+        # todo: test
+        # todo: check if the clause must really have size 2
+        Hidden Literal Addition HLA(F,C)
+        :complexity: O(c*l^2), where c is the number of clauses on CNF, and l is the number of literals on one clause
+        :param f: CNF
+        :param c: Clause
+        :return: HLA(F,C)
+        """
+        c = self
+
+        c_hla = c.copy_with_new_id()
+
+        for lit in c.get_literals():  # l
+            for clause in f.get_clauses():  # c
+                if clause != c and clause.size == 2:
+                    lit_clause = Clause([lit])
+                    if lit_clause.is_sub_clause_of(clause):  # 1
+
+                        dif = clause.get_diff(lit_clause)  # 1
+                        lit = dif[0].copy()
+
+                        c_hla.add_literal(lit)  # l
+
+        return c_hla
+
+    def ala(self, f):
+        """
+        # todo: test
+        Asymmetric Literal Addition ALA(F,C)
+        :complexity: O(c*(l^2)*(2^l))
+        :param f:
+        :param c:
+        :return:
+        """
+        c = self
+
+        c_ala = c.copy_with_new_id()
+
+        sub_sets = c.get_literals_sub_sets()
+
+        for literal_sub_set in sub_sets:
+            for clause in f.get_clauses():
+                if clause != c:
+                    sub_clause = Clause(literal_sub_set)
+                    if clause.size == sub_clause.size + 1:
+                        if sub_clause.is_sub_clause_of(clause):
+                            dif = clause.get_diff(sub_clause)
+                            lit = dif[0].copy()
+
+                            c_ala.add_literal(lit)
+
+        return c_ala
 
     def __eq__(self, other):
         return self.id == other.id
