@@ -3,7 +3,10 @@ from variable import Variable
 
 
 class Clause:
-    def __init__(self, variable_list):
+    def __init__(self, variable_list: list):
+        if isinstance(variable_list, set):
+            variable_list = [Variable(var) for var in variable_list]
+
         self.variable_list = variable_list
         self.size = len(self.variable_list)
         self.id = utils.create_id()
@@ -26,10 +29,36 @@ class Clause:
     def get_diff(self, other_clause):
         """
         Get the difference between two literal sets, this literal set and the other literal set
+        :complexity: O(n) where n is the size of the sets
         :param other_clause: the other clause
         :return: a list of Variables that is the difference between the two literals set.
         """
         return [Variable(var) for var in self.literals_set.difference(other_clause.literals_set)]
+
+    def get_resolvent(self, other_clause, lit):
+        """
+        Get the resolvent of two clauses
+        :complexity: O(n) where n is the size of the clauses
+        :param other_clause: the other clause
+        :param lit: literal to get the resolvent based on it
+        :return: return a new clause, the resolvent clause
+        """
+        if other_clause == self \
+                or not other_clause.has_literal(-lit.variable_value) \
+                or not self.has_literal(lit.variable_value):
+            raise Exception("")
+
+        self_set = self.literals_set.copy()
+        other_set = other_clause.literal_set.copy()
+
+        self_set.remove(lit.variable_value)
+        other_set.remove(-lit.variable_value)
+
+        new_set = self_set.union(other_set)
+
+        resolvent_clause = Clause(new_set)
+
+        return resolvent_clause
 
     def copy_with_new_id(self):
         """
@@ -77,7 +106,7 @@ class Clause:
     def get_literals_sub_sets(self):
         """
         Get all literals sub sets excluding the empty set
-        this is done in O(n2^n), where n is the number of literals in the clause
+        :complexity: this is done in O(n2^n), where n is the number of literals in the clause
         :return: all sub sets
         """
         def rec(i, curr, literals, ans):
