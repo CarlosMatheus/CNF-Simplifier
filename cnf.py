@@ -115,3 +115,48 @@ class Cnf:
 
         return new_cnf
 
+    def subsumption_elimination(self):
+        """
+        Simplify CNF by removing all clauses that are subsumed
+
+        :complexity: O(  )
+
+        :return: a new CNF without subsumed clauses
+        """
+
+        new_cnf = Cnf([])
+        for clause in self.clause_list:
+            if not clause.is_subsumed():
+                copied_clause = clause.copy_with_new_id()
+                new_cnf.add_clause(copied_clause)
+
+        return new_cnf
+
+    def hidden_subsumption_elimination(self):
+        """
+        Simplify CNF by removing all clauses that are hidden subsumed
+        :complexity: O( (l*c)^2 )
+        :return: a new CNF without hidden subsumed clauses
+        """
+        new_cnf = Cnf([])
+        for clause in self.clause_list:
+            hla_clause = clause.hla(self)
+            if not hla_clause.is_subsumed():
+                new_cnf.add_clause(clause)
+
+        return new_cnf
+
+    def asymmetric_subsumption_elimination(self):
+        """
+        Simplify CNF by removing all clauses that are asymmetric subsumed
+
+        :complexity: O( c^2 * l^2 * 2^l )
+        :return: a new CNF without asymmetric subsumed clauses
+        """
+        new_cnf = Cnf([])
+        for clause in self.clause_list:
+            ala_clause = clause.ala(self)
+            if not ala_clause.is_subsumed():
+                new_cnf.add_clause(clause)
+
+        return new_cnf
