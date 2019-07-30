@@ -56,19 +56,5 @@ class Simplifier:
 
         return c_ala
 
-    def is_subsumed_clause(self, clause, cnf):
-        """
-        todo: Verify if it is necessary to verify if they are different
-        todo: this might belong to the clause class
-        :complexity: todo
-        :param clause: the evaluated clause
-        :param cnf: The cnf that the clause belong
-        :return: boolean
-        """
-        for other_clause in cnf.get_clauses():
-            if other_clause.is_different(clause):
-                # todo: verify if that is the correct order:
-                if other_clause.is_sub_clause_of(clause):
-                    return True
-        return False
+
 
