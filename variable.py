@@ -1,9 +1,9 @@
 class Variable:
-    def __init__(self, variable_string: int):
-        if type(variable_string) == type(int()):
-            variable_string = int(variable_string)
+    def __init__(self, variable_string):
+        if isinstance(variable_string, int):
+            variable_string = str(variable_string)
 
-        if type(variable_string) == type(Variable):
+        if isinstance(variable_string, Variable):
             variable_string = variable_string.original_string
 
         self.original_string = variable_string
