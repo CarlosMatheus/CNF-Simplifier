@@ -86,7 +86,7 @@ class Cnf:
 
         new_cnf = Cnf([])
         for clause in self.clause_list:
-            if not clause.is_blocked():
+            if not clause.is_blocked(self):
                 copied_clause = clause.copy_with_new_id()
                 new_cnf.add_clause(copied_clause)
 
@@ -102,7 +102,7 @@ class Cnf:
         new_cnf = Cnf([])
         for clause in self.clause_list:
             hla_clause = clause.hla(self)
-            if not hla_clause.is_blocked():
+            if not hla_clause.is_blocked(self):
                 new_cnf.add_clause(clause)
 
         return new_cnf
@@ -117,7 +117,7 @@ class Cnf:
         new_cnf = Cnf([])
         for clause in self.clause_list:
             ala_clause = clause.ala(self)
-            if not ala_clause.is_blocked():
+            if not ala_clause.is_blocked(self):
                 new_cnf.add_clause(clause)
 
         return new_cnf
@@ -133,7 +133,7 @@ class Cnf:
 
         new_cnf = Cnf([])
         for clause in self.clause_list:
-            if not clause.is_subsumed():
+            if not clause.is_subsumed(self):
                 copied_clause = clause.copy_with_new_id()
                 new_cnf.add_clause(copied_clause)
 
@@ -148,7 +148,7 @@ class Cnf:
         new_cnf = Cnf([])
         for clause in self.clause_list:
             hla_clause = clause.hla(self)
-            if not hla_clause.is_subsumed():
+            if not hla_clause.is_subsumed(self):
                 new_cnf.add_clause(clause)
 
         return new_cnf
@@ -163,7 +163,7 @@ class Cnf:
         new_cnf = Cnf([])
         for clause in self.clause_list:
             ala_clause = clause.ala(self)
-            if not ala_clause.is_subsumed():
+            if not ala_clause.is_subsumed(self):
                 new_cnf.add_clause(clause)
 
         return new_cnf
