@@ -77,11 +77,25 @@ class Cnf:
         :complexity: O( (c*l)^2 )
         :return: a new CNF without hidden tautological clauses
         """
-        new_cnf = Cnf([])
-        for clause in self.clause_list:
-            hla_clause = clause.hla(self)
-            if not hla_clause.is_tautology():
-                new_cnf.add_clause(clause)
+        new_cnf = self.copy()
+
+        while True:
+            size = new_cnf.get_number_of_clauses()
+
+            idx = 0
+            while idx < len(new_cnf.clause_list):
+                clause = new_cnf.clause_list[idx]
+
+                hla_clause = clause.hla(new_cnf)
+                is_tautology = hla_clause.get_blocking_clause(new_cnf)
+
+                if is_tautology:
+                    new_cnf.remove_clause(clause)
+                else:
+                    idx += 1
+
+            if new_cnf.get_number_of_clauses() == size:
+                break
 
         return new_cnf
 
