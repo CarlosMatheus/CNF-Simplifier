@@ -87,7 +87,7 @@ class Cnf:
                 clause = new_cnf.clause_list[idx]
 
                 hla_clause = clause.hla(new_cnf)
-                is_tautology = hla_clause.get_blocking_clause(new_cnf)
+                is_tautology = hla_clause.is_tautology()
 
                 if is_tautology:
                     new_cnf.remove_clause(clause)
@@ -106,11 +106,26 @@ class Cnf:
         :complexity: O( c^2 * l^2 * 2^l )
         :return: a new CNF without asymmetric tautological clauses
         """
-        new_cnf = Cnf([])
-        for clause in self.clause_list:
-            ala_clause = clause.ala(self)
-            if not ala_clause.is_tautology():
-                new_cnf.add_clause(clause)
+
+        new_cnf = self.copy()
+
+        while True:
+            size = new_cnf.get_number_of_clauses()
+
+            idx = 0
+            while idx < len(new_cnf.clause_list):
+                clause = new_cnf.clause_list[idx]
+
+                ala_clause = clause.ala(new_cnf)
+                is_tautology = ala_clause.is_tautology()
+
+                if is_tautology:
+                    new_cnf.remove_clause(clause)
+                else:
+                    idx += 1
+
+            if new_cnf.get_number_of_clauses() == size:
+                break
 
         return new_cnf
 
@@ -132,7 +147,7 @@ class Cnf:
                 blocking_clause = clause.get_blocking_clause(new_cnf)
 
                 if blocking_clause is not None:
-                    if blocking_clause.size < clause.size:
+                    if blocking_clause.get_set_size() < clause.get_set_size():
                         new_cnf.remove_clause(blocking_clause)
                     else:
                         new_cnf.remove_clause(clause)
