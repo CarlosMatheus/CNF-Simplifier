@@ -13,6 +13,29 @@ class Cnf:
         """
         return self.clause_list
 
+    def copy(self):
+        """
+        get a copy of the cnf with clauses with new ids
+        :complexity: O(c*l)
+        :return: copy of the cnf
+        """
+        new_clause_list = Cnf([clause.copy_with_new_id() for clause in self.clause_list])
+        return new_clause_list
+
+    def get_number_of_clauses(self):
+        """
+        :return: length of clause list
+        """
+        return len(self.clause_list)
+
+    def remove_clause(self, clause):
+        """
+        comparison will be made with id
+        :complexity: O(n)
+        :param clause: clause to be removed
+        """
+        self.clause_list.remove(clause)
+
     def add_clause(self, clause):
         """
         Add a new clause to the CNF
@@ -84,11 +107,26 @@ class Cnf:
         :return: a new CNF without blocked clauses
         """
 
-        new_cnf = Cnf([])
-        for clause in self.clause_list:
-            if not clause.is_blocked(self):
-                copied_clause = clause.copy_with_new_id()
-                new_cnf.add_clause(copied_clause)
+        new_cnf = self.copy()
+
+        while True:
+            size = new_cnf.get_number_of_clauses()
+
+            idx = 0
+            while idx < len(new_cnf.clause_list):
+                clause = new_cnf.clause_list[idx]
+                blocking_clause = clause.is_blocked(new_cnf)
+
+                if blocking_clause is not None:
+                    if blocking_clause.size < clause.size:
+                        new_cnf.remove_clause(blocking_clause)
+                    else:
+                        new_cnf.remove_clause(clause)
+                else:
+                    idx += 1
+
+            if new_cnf.get_number_of_clauses() == size:
+                break
 
         return new_cnf
 
