@@ -23,15 +23,13 @@ class Clause:
 
     def get_size(self):
         """
-
-        :return:
+        :return: variable list size (might contain duplicated variables)
         """
         return len(self.variable_list)
 
     def get_set_size(self):
         """
-
-        :return:
+        :return: variable set size
         """
         return len(self.literals_set)
 
@@ -208,15 +206,12 @@ class Clause:
 
     def is_subsumed(self, cnf):
         """
-        todo: Verify if it is necessary to verify if they are different
-        todo: this might belong to the clause class
         :complexity: O(c*l), where l is the number of literals per clause, and c is the number of clause in the cnf
         :param cnf: The cnf that the clause belong
         :return: boolean
         """
         for other_clause in cnf.get_clauses():
             if other_clause != self:
-                # todo: verify if that is the correct order:
                 if other_clause.is_sub_clause_of(self):
                     return True
         return False

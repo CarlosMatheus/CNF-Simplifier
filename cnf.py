@@ -228,11 +228,32 @@ class Cnf:
         :return: a new CNF without subsumed clauses
         """
 
-        new_cnf = Cnf([])
-        for clause in self.clause_list:
-            if not clause.is_subsumed(self):
-                copied_clause = clause.copy_with_new_id()
-                new_cnf.add_clause(copied_clause)
+        # new_cnf = Cnf([])
+        # for clause in self.clause_list:
+        #     if not clause.is_subsumed(self):
+        #         copied_clause = clause.copy_with_new_id()
+        #         new_cnf.add_clause(copied_clause)
+        #
+        # return new_cnf
+
+        new_cnf = self.copy()
+
+        while True:
+            size = new_cnf.get_number_of_clauses()
+
+            idx = 0
+            while idx < len(new_cnf.clause_list):
+                clause = new_cnf.clause_list[idx]
+
+                is_subsumed = clause.is_subsumed(new_cnf)
+
+                if is_subsumed:
+                    new_cnf.remove_clause(clause)
+                else:
+                    idx += 1
+
+            if new_cnf.get_number_of_clauses() == size:
+                break
 
         return new_cnf
 
