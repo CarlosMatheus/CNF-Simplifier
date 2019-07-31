@@ -15,5 +15,7 @@ def execute(i):
     print(complete_simplified_cnf.get_cnf_string())
 
 if __name__ == '__main__':
+    execute(0)
+    execute(1)
     execute(3)
     execute(4)

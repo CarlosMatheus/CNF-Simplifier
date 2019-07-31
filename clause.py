@@ -118,6 +118,16 @@ class Clause:
         new_clause = Clause(new_variable_list)
         return new_clause
 
+    def copy_with_same_id(self):
+        """
+        Copy this clause to a new one with the same id and new literals
+        :complexity: O(n) where n in the number of literals inside the clause
+        :return: Clause
+        """
+        new_clause = self.copy_with_new_id()
+        new_clause.id = self.id
+        return new_clause
+
     def is_tautology(self):
         """
         checks whether the clause is a tautology
@@ -226,7 +236,7 @@ class Clause:
         """
         c = self
 
-        c_hla = c.copy_with_new_id()
+        c_hla = c.copy_with_same_id()
 
         for lit in c.get_literals():
             for clause in f.get_clauses():
@@ -251,7 +261,7 @@ class Clause:
         """
         c = self
 
-        c_ala = c.copy_with_new_id()
+        c_ala = c.copy_with_same_id()
 
         sub_sets = c.get_literals_sub_sets()
 
