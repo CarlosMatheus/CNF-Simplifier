@@ -20,8 +20,14 @@ class Reader:
         for row in rows:
             if row[0] != 'c' and row[0] != 'p':
                 var_list = list()
-                for var in row.split(' '):
-                    var_list.append(Variable(var))
+                if ' ' in row:
+                    for var in row.split(' '):
+                        if int(var) != 0:
+                            var_list.append(Variable(var))
+                if '\t' in row:
+                    for var in row.split('\t'):
+                        if int(var) != 0:
+                            var_list.append(Variable(var))
                 clause_list.append(Clause(var_list))
 
         cnf = Cnf(clause_list)
