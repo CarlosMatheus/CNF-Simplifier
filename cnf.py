@@ -115,7 +115,7 @@ class Cnf:
             idx = 0
             while idx < len(new_cnf.clause_list):
                 clause = new_cnf.clause_list[idx]
-                blocking_clause = clause.is_blocked(new_cnf)
+                blocking_clause = clause.get_blocking_clause(new_cnf)
 
                 if blocking_clause is not None:
                     if blocking_clause.size < clause.size:
@@ -137,11 +137,26 @@ class Cnf:
         :complexity: O( (c*l)^2 )
         :return: a new CNF without hidden blocked clauses
         """
-        new_cnf = Cnf([])
-        for clause in self.clause_list:
-            hla_clause = clause.hla(self)
-            if not hla_clause.is_blocked(self):
-                new_cnf.add_clause(clause)
+
+        new_cnf = self.copy()
+
+        while True:
+            size = new_cnf.get_number_of_clauses()
+
+            idx = 0
+            while idx < len(new_cnf.clause_list):
+                clause = new_cnf.clause_list[idx]
+
+                hla_clause = clause.hla(new_cnf)
+                blocking_clause = hla_clause.get_blocking_clause(new_cnf)
+
+                if blocking_clause is not None:
+                    new_cnf.remove_clause(clause)
+                else:
+                    idx += 1
+
+            if new_cnf.get_number_of_clauses() == size:
+                break
 
         return new_cnf
 
@@ -152,6 +167,7 @@ class Cnf:
         :complexity: O( c^2 * l^2 * 2^l )
         :return: a new CNF without asymmetric blocked clauses
         """
+
         new_cnf = Cnf([])
         for clause in self.clause_list:
             ala_clause = clause.ala(self)
@@ -159,6 +175,28 @@ class Cnf:
                 new_cnf.add_clause(clause)
 
         return new_cnf
+
+        # new_cnf = self.copy()
+        #
+        # while True:
+        #     size = new_cnf.get_number_of_clauses()
+        #
+        #     idx = 0
+        #     while idx < len(new_cnf.clause_list):
+        #         clause = new_cnf.clause_list[idx]
+        #
+        #         hla_clause = clause.hla(new_cnf)
+        #         blocking_clause = hla_clause.get_blocking_clause(new_cnf)
+        #
+        #         if blocking_clause is not None:
+        #             new_cnf.remove_clause(clause)
+        #         else:
+        #             idx += 1
+        #
+        #     if new_cnf.get_number_of_clauses() == size:
+        #         break
+        #
+        # return new_cnf
 
     def subsumption_elimination(self):
         """
