@@ -19,21 +19,27 @@ class Clause:
         for var in variable_list:
             self.literals_set.add(var.variable_value)
 
-        self.__tautology = self.__update_tautology()
+        self.__tautology = self.__setup_tautology()
 
-    def __update_tautology(self):
+    def __setup_tautology(self):
         """
         Check if the clause is a tautology
         :complexity: O(n), where n is the number of literals on clause
         :return: boolean
         """
 
-        # todo: adjust this for the case it is just adding one
-
         for var in self.variable_list:
             if -var.variable_value in self.literals_set:
                 return True
         return False
+
+    def __update_tautology(self, variable_added):
+        """
+        Check if the clause is a tautology
+        :complexity: O(1)
+        :return: boolean
+        """
+        return -variable_added.variable_value in self.literals_set
 
     def get_clause_string(self):
         """
@@ -54,7 +60,7 @@ class Clause:
         self.variable_list.append(lit)
         self.size = len(self.variable_list)
         self.literals_set.add(lit.variable_value)
-        self.__tautology = self.__update_tautology()
+        self.__tautology = self.__update_tautology(lit)
 
     def get_diff(self, other_clause):
         """
@@ -74,12 +80,12 @@ class Clause:
         :return: return a new clause, the resolvent clause
         """
         if other_clause == self \
-                or not other_clause.has_literal(-lit.variable_value) \
-                or not self.has_literal(lit.variable_value):
+                or not other_clause.is_literal_value_present(-lit.variable_value) \
+                or not self.is_literal_value_present(lit.variable_value):
             raise Exception("")
 
         self_set = self.literals_set.copy()
-        other_set = other_clause.literal_set.copy()
+        other_set = other_clause.literals_set.copy()
 
         self_set.remove(lit.variable_value)
         other_set.remove(-lit.variable_value)
@@ -152,8 +158,9 @@ class Clause:
         :return: all sub sets
         """
         def rec(i, curr, literals, ans):
-            if i == len(literals) and curr:
-                ans.append(curr)
+            if i == len(literals):
+                if curr:
+                    ans.append(curr)
             else:
                 copied = curr.copy()
                 copied.append(literals[i])
@@ -181,7 +188,7 @@ class Clause:
         for lit in self.get_literals():
             for other_clause in cnf.get_clauses():
                 if other_clause != self:
-                    if other_clause.has_literal(-lit.variable_value):
+                    if other_clause.is_literal_value_present(-lit.variable_value):
                         resolvent_clause = self.get_resolvent(other_clause, lit)
                         if resolvent_clause.is_tautology():
                             return True
