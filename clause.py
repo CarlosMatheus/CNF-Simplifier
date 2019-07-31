@@ -173,12 +173,10 @@ class Clause:
 
         return sub_sets
 
-    def is_blocked(self, cnf):
+    def get_blocking_clause(self, cnf):
         """
-        # todo: really understand if you can just remove the clause.
         Checks whether a CNF's clause is a bocked clause or not
         :complexity: O(c*l^2), where c is the number of clauses in cnf, and l is the number of literals per clause
-        :param clause: the clause that will be analised
         :param cnf: the cnf that the clause belogs
         :return: boolean
         """
@@ -191,8 +189,8 @@ class Clause:
                     if other_clause.is_literal_value_present(-lit.variable_value):
                         resolvent_clause = self.get_resolvent(other_clause, lit)
                         if resolvent_clause.is_tautology():
-                            return True
-        return False
+                            return other_clause
+        return None
 
     def is_subsumed(self, cnf):
         """
@@ -212,11 +210,9 @@ class Clause:
     def hla(self, f: "Cnf") -> "Clause":
         """
         # todo: test
-        # todo: check if the clause must really have size 2
         Hidden Literal Addition HLA(F,C)
         :complexity: O(c*l^2), where c is the number of clauses on CNF, and l is the number of literals on one clause
         :param f: CNF
-        :param c: Clause
         :return: HLA(F,C)
         """
         c = self
@@ -241,9 +237,8 @@ class Clause:
         # todo: test
         Asymmetric Literal Addition ALA(F,C)
         :complexity: O(c*(l^2)*(2^l))
-        :param f:
-        :param c:
-        :return:
+        :param f: CNF
+        :return: ALA(F,C)
         """
         c = self
 
