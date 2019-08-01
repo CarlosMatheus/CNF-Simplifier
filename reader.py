@@ -11,7 +11,7 @@ class Reader:
 
     def read(self, file_name):
         file_path = path.join(path.join(self.this_file_path, self.input_folder_name), file_name)
-        print(file_path)
+        print('reading: ' + file_path)
         file = open(file_path, 'r').read()
         rows = file.split('\n')
 

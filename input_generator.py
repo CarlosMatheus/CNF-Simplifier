@@ -23,7 +23,7 @@ class InputGenerator:
         for i in range(num_of_inputs + 1):
             cnf = self.generate()
             writer = Writer(folder_name)
-            file_name = ('output%0{}d.txt'.format(len(str(num_of_inputs)))) % i
+            file_name = ('input%0{}d.txt'.format(len(str(num_of_inputs)))) % i
             writer.write(file_name, cnf)
 
     def generate(self):

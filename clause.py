@@ -205,9 +205,6 @@ class Clause:
         :param cnf: the cnf that the clause belogs
         :return: boolean
         """
-        if self.is_tautology():
-            return True
-
         for lit in self.get_literals():
             for other_clause in cnf.get_clauses():
                 if other_clause != self:

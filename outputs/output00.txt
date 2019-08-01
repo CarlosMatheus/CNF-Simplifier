@@ -1,5 +1,0 @@
-c
-c start with comments
-c
-p cnf 4 1
--1 5 3 4
