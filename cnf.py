@@ -13,6 +13,15 @@ class Cnf:
         """
         return self.clause_list
 
+    def get_number_of_literals(self):
+        """
+        :return: number of literals
+        """
+        total_set = set()
+        for clause in self.get_clauses():
+            total_set = total_set.union(set([abs(clause) for clause in clause.literals_set]))
+        return len(total_set)
+
     def copy(self):
         """
         get a copy of the cnf with clauses with new ids
@@ -48,11 +57,14 @@ class Cnf:
 
         self.clause_list.append(clause)
 
-    def get_cnf_string(self):
+    def get_cnf_string(self, with_zero=False):
         """
         :return: cnf string
         """
-        clauses_string_list = [clause.get_clause_string() for clause in self.clause_list]
+        if with_zero:
+            clauses_string_list = [clause.get_clause_string(with_zero) for clause in self.clause_list]
+        else:
+            clauses_string_list = [clause.get_clause_string() for clause in self.clause_list]
         return '\n'.join(clauses_string_list)
 
     def tautology_elimination(self):
