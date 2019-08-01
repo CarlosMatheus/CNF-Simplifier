@@ -245,7 +245,11 @@ class Clause:
                     if lit_clause.is_sub_clause_of(clause):
 
                         dif = clause.get_diff(lit_clause)
-                        lit = dif[0].copy()
+
+                        if dif:
+                            lit = dif[0].copy()
+                        else:
+                            lit = lit
 
                         c_hla.add_literal(lit)
 
