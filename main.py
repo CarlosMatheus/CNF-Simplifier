@@ -2,20 +2,23 @@ import reader
 from writer import Writer
 from simplifier import Simplifier
 from input_generator import InputGenerator
+import time
 
 
 def execution(function, rd, writer, input_name, output_name, function_name, data_hash):
     cnf = rd.read(input_name)
     initial_num_of_clause = cnf.get_number_of_clauses()
+    initial_time = time.time()
     complete_simplified_cnf = function(cnf)
+    final_time = time.time()
     final_num_of_clause = complete_simplified_cnf.get_number_of_clauses()
     writer.write(output_name, complete_simplified_cnf)
 
     print(function_name)
     if function_name in data_hash:
-        data_hash[function_name].append(1 - final_num_of_clause/initial_num_of_clause)
+        data_hash[function_name].append( (1 - final_num_of_clause/initial_num_of_clause, final_time - initial_time) )
     else:
-        data_hash[function_name] = [1 - final_num_of_clause / initial_num_of_clause]
+        data_hash[function_name] = [ (1 - final_num_of_clause / initial_num_of_clause, final_time - initial_time ) ]
 
 
 def execute(input_folder_name, output_folder_name, file_num, data_hash):
@@ -34,38 +37,32 @@ def execute(input_folder_name, output_folder_name, file_num, data_hash):
         (simplifier.hidden_tautoly, "hidden_tautoly"),
         (simplifier.hidden_blocked_clause, "hidden_blocked_clause"),
         (simplifier.hidden_subsumption_elimination, "hidden_subsumption_elimination"),
+        (simplifier.asymmetric_tautoly, "asymmetric_tautoly"),
+        (simplifier.asymmetric_blocked_clause, "asymmetric_blocked_clause"),
+        (simplifier.asymmetric_subsumption_elimination, "asymmetric_subsumption_elimination"),
         (simplifier.explicits, "explicits"),
         (simplifier.hiddens, "hiddens"),
+        (simplifier.asymmetrics, "asymmetrics"),
         (simplifier.complete, "Complete"),
     ]
-
-    # Just Tautology:
-
-    # Just Blocked Clause:
-
-    # Just Subsumed Clause:
-
-    # Hidden Tautology:
-
-    # Hidden Blocked Clause:
-
-    # Hidden Subsumed:
-
-    # simples
-
-    # Hidden
 
     for function, function_name in execution_lt:
         execution(function, rd, writer, input_name, output_name, function_name, data_hash)
 
 
 if __name__ == '__main__':
-    number_of_files = 2
+
+    file = open('results.txt', 'w')
+
+    number_of_files = 1
     base_var_num = 20
     var_num = base_var_num
     clause_num = base_var_num * 3
 
-    for i in range(1, 2):
+    loop_exp_factor = 1.3
+    num_of_loops = 2
+
+    for i in range(1, num_of_loops + 1):
 
         input_folder_name = 'inputs' + str(i)
         output_folder_name = 'outputs' + str(i)
@@ -79,20 +76,34 @@ if __name__ == '__main__':
         for file_num in range(number_of_files):
             execute(input_folder_name, output_folder_name, file_num, data_hash)
 
-        print(str(i) + ': ')
-        print('var_num ' + str(var_num) + ' +- ' + str(var_num/2))
-        print('clause_num ' + str(clause_num) + ' +- ' + str(clause_num/2))
+        lt = list()
+
+        lt.append(str(i) + ': ')
+        lt.append('var_num ' + str(var_num) + ' +- ' + str(var_num/2))
+        lt.append('clause_num ' + str(clause_num) + ' +- ' + str(clause_num/2))
+        lt.append('for ' + str(number_of_files) + ' number_of_files\n')
 
         for function_name in data_hash.keys():
-            lt = data_hash[function_name]
-            print('in function ' + function_name)
-            print('for ' + str(len(lt)) + ' cases')
-            print('mean reduction was ' + str(sum(lt)/len(lt)))
-            print('max reduction was ' + str(max(lt)))
-            print('min reduction was ' + str(min(lt)))
-            print(lt)
+            data_lt = []
+            time_lt = []
+            for elm in data_hash[function_name]:
+                data_lt.append(elm[0])
+                time_lt.append(elm[1])
 
-        print()
+            lt.append('in function ' + function_name)
+            lt.append('average time per cnf was ' + str(sum(time_lt)/len(time_lt)))
+            lt.append('average reduction was ' + str(sum(data_lt)/len(data_lt)))
+            lt.append('max reduction was ' + str(max(data_lt)))
+            lt.append('min reduction was ' + str(min(data_lt)))
+            lt.append(str(data_lt))
+            lt.append('')
 
-        var_num *= 2
-        clause_num *= 2
+        lt.append('\n=================================\n')
+
+        for elm in lt:
+            print(elm)
+
+        file.write('\n'.join(lt))
+
+        var_num = int(var_num * loop_exp_factor)
+        clause_num = int(clause_num * loop_exp_factor)

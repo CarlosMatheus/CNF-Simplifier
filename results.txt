@@ -1,0 +1,196 @@
+1: 
+var_num 20 +- 10.0
+clause_num 60 +- 30.0
+for 1 number_of_files
+
+in function tautoly
+average time per cnf was 0.020652055740356445
+average reduction was 0.11111111111111116
+max reduction was 0.11111111111111116
+min reduction was 0.11111111111111116
+[0.11111111111111116]
+
+in function blocked_clause
+average time per cnf was 0.07398390769958496
+average reduction was 0.5873015873015873
+max reduction was 0.5873015873015873
+min reduction was 0.5873015873015873
+[0.5873015873015873]
+
+in function subsumption_elimination
+average time per cnf was 0.011456966400146484
+average reduction was 0.031746031746031744
+max reduction was 0.031746031746031744
+min reduction was 0.031746031746031744
+[0.031746031746031744]
+
+in function hidden_tautoly
+average time per cnf was 0.01041412353515625
+average reduction was 0.031746031746031744
+max reduction was 0.031746031746031744
+min reduction was 0.031746031746031744
+[0.031746031746031744]
+
+in function hidden_blocked_clause
+average time per cnf was 0.013245105743408203
+average reduction was 0.031746031746031744
+max reduction was 0.031746031746031744
+min reduction was 0.031746031746031744
+[0.031746031746031744]
+
+in function hidden_subsumption_elimination
+average time per cnf was 0.010339021682739258
+average reduction was 0.031746031746031744
+max reduction was 0.031746031746031744
+min reduction was 0.031746031746031744
+[0.031746031746031744]
+
+in function asymmetric_tautoly
+average time per cnf was 1.7975423336029053
+average reduction was 0.1428571428571429
+max reduction was 0.1428571428571429
+min reduction was 0.1428571428571429
+[0.1428571428571429]
+
+in function asymmetric_blocked_clause
+average time per cnf was 0.5535678863525391
+average reduction was 0.7301587301587302
+max reduction was 0.7301587301587302
+min reduction was 0.7301587301587302
+[0.7301587301587302]
+
+in function asymmetric_subsumption_elimination
+average time per cnf was 0.5942819118499756
+average reduction was 0.6984126984126984
+max reduction was 0.6984126984126984
+min reduction was 0.6984126984126984
+[0.6984126984126984]
+
+in function explicits
+average time per cnf was 0.03609895706176758
+average reduction was 0.5079365079365079
+max reduction was 0.5079365079365079
+min reduction was 0.5079365079365079
+[0.5079365079365079]
+
+in function hiddens
+average time per cnf was 0.06702399253845215
+average reduction was 0.7301587301587302
+max reduction was 0.7301587301587302
+min reduction was 0.7301587301587302
+[0.7301587301587302]
+
+in function asymmetrics
+average time per cnf was 0.7721052169799805
+average reduction was 0.746031746031746
+max reduction was 0.746031746031746
+min reduction was 0.746031746031746
+[0.746031746031746]
+
+in function Complete
+average time per cnf was 0.6636981964111328
+average reduction was 0.746031746031746
+max reduction was 0.746031746031746
+min reduction was 0.746031746031746
+[0.746031746031746]
+
+
+=================================
+2: 
+var_num 26 +- 13.0
+clause_num 78 +- 39.0
+for 1 number_of_files
+
+in function tautoly
+average time per cnf was 0.0012431144714355469
+average reduction was 0.2692307692307693
+max reduction was 0.2692307692307693
+min reduction was 0.2692307692307693
+[0.2692307692307693]
+
+in function blocked_clause
+average time per cnf was 0.008234977722167969
+average reduction was 0.9487179487179487
+max reduction was 0.9487179487179487
+min reduction was 0.9487179487179487
+[0.9487179487179487]
+
+in function subsumption_elimination
+average time per cnf was 0.010083913803100586
+average reduction was 0.3076923076923077
+max reduction was 0.3076923076923077
+min reduction was 0.3076923076923077
+[0.3076923076923077]
+
+in function hidden_tautoly
+average time per cnf was 0.010107755661010742
+average reduction was 0.3076923076923077
+max reduction was 0.3076923076923077
+min reduction was 0.3076923076923077
+[0.3076923076923077]
+
+in function hidden_blocked_clause
+average time per cnf was 0.010087013244628906
+average reduction was 0.3076923076923077
+max reduction was 0.3076923076923077
+min reduction was 0.3076923076923077
+[0.3076923076923077]
+
+in function hidden_subsumption_elimination
+average time per cnf was 0.010392904281616211
+average reduction was 0.3076923076923077
+max reduction was 0.3076923076923077
+min reduction was 0.3076923076923077
+[0.3076923076923077]
+
+in function asymmetric_tautoly
+average time per cnf was 2.6073341369628906
+average reduction was 0.2435897435897436
+max reduction was 0.2435897435897436
+min reduction was 0.2435897435897436
+[0.2435897435897436]
+
+in function asymmetric_blocked_clause
+average time per cnf was 0.8961248397827148
+average reduction was 0.9487179487179487
+max reduction was 0.9487179487179487
+min reduction was 0.9487179487179487
+[0.9487179487179487]
+
+in function asymmetric_subsumption_elimination
+average time per cnf was 1.2935528755187988
+average reduction was 0.8461538461538461
+max reduction was 0.8461538461538461
+min reduction was 0.8461538461538461
+[0.8461538461538461]
+
+in function explicits
+average time per cnf was 0.01826786994934082
+average reduction was 0.9487179487179487
+max reduction was 0.9487179487179487
+min reduction was 0.9487179487179487
+[0.9487179487179487]
+
+in function hiddens
+average time per cnf was 0.07319879531860352
+average reduction was 0.858974358974359
+max reduction was 0.858974358974359
+min reduction was 0.858974358974359
+[0.858974358974359]
+
+in function asymmetrics
+average time per cnf was 1.4821422100067139
+average reduction was 0.8717948717948718
+max reduction was 0.8717948717948718
+min reduction was 0.8717948717948718
+[0.8717948717948718]
+
+in function Complete
+average time per cnf was 1.2539968490600586
+average reduction was 0.8717948717948718
+max reduction was 0.8717948717948718
+min reduction was 0.8717948717948718
+[0.8717948717948718]
+
+
+=================================
