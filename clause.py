@@ -53,12 +53,15 @@ class Clause:
         """
         return -variable_added.variable_value in self.literals_set
 
-    def get_clause_string(self):
+    def get_clause_string(self, with_zero=False):
         """
         get a string with all literals
         :return: string with all literals separated by spaces
         """
         lt = [var.original_string for var in self.variable_list]
+
+        if with_zero:
+            lt += ['0']
 
         return ' '.join(lt)
 
