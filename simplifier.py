@@ -18,15 +18,15 @@ class Simplifier:
         return cnf
 
     def hidden_tautoly(self, cnf):
-        cnf = cnf.subsumption_elimination()
+        cnf = cnf.hidden_tautology_elimination()
         return cnf
 
     def hidden_blocked_clause(self, cnf):
-        cnf = cnf.subsumption_elimination()
+        cnf = cnf.hidden_blocked_clause_elimination()
         return cnf
 
     def hidden_subsumption_elimination(self, cnf):
-        cnf = cnf.subsumption_elimination()
+        cnf = cnf.hidden_subsumption_elimination()
         return cnf
 
     def asymmetric_tautoly(self, cnf):

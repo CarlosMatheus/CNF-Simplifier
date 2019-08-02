@@ -54,13 +54,13 @@ if __name__ == '__main__':
 
     file = open('results.txt', 'w')
 
-    number_of_files = 1
+    number_of_files = 10
     base_var_num = 20
     var_num = base_var_num
     clause_num = base_var_num * 3
 
     loop_exp_factor = 1.3
-    num_of_loops = 2
+    num_of_loops = 5
 
     for i in range(1, num_of_loops + 1):
 

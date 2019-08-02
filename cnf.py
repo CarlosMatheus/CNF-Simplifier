@@ -70,7 +70,7 @@ class Cnf:
     def tautology_elimination(self):
         """
         Simplify CNF by removing all clauses that are tautology
-        :complexity: O(c*l)
+        :complexity: O(c)
         :return: a new CNF without tautological clauses
         """
 
