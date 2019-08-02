@@ -1,9 +1,0 @@
-c
-c start with comments
-c
-p cnf 9 5
--4 1 9 0
-5 -6 9 -6 0
-2 -3 0
-9 7 6 0
-9 -2 -2 -10 0
