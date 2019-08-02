@@ -2,3 +2,6 @@
 *.idea/
 *__pycache__/
 venv/
+outputs*
+results.txt
+inputs*
